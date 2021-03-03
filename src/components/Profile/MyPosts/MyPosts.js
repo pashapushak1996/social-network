@@ -1,24 +1,23 @@
 import React from "react";
 import styles from './MyPosts.module.css';
 import {Post} from "./Post/Post";
-import {addPostCreator, changePostTextCreator} from "../../../redux/reducers/profile-reducer";
 
-const MyPosts = ({posts, dispatch, newPostText}) => {
+const MyPosts = ({posts, newPostText, addPost, updatePostText, deletePost}) => {
 
     const postDataElement = posts
         .map((post) => <Post
-            dispatch={dispatch}
+            deletePost={deletePost}
             id={post.id}
             key={post.id}
             message={post.message}
             likesCount={post.likesCount}/>);
 
-    const changeTextAreaValue = (value) => {
-        dispatch(changePostTextCreator(value));
+    const updatePostValue = (value) => {
+        updatePostText(value);
     };
 
     const handleAddPost = () => {
-        dispatch(addPostCreator());
+        addPost();
     };
 
     return (
@@ -28,7 +27,7 @@ const MyPosts = ({posts, dispatch, newPostText}) => {
                 <div>
                     <textarea placeholder={`New post message`}
                               value={newPostText}
-                              onChange={({target: {value}}) => changeTextAreaValue(value)}/>
+                              onChange={(e) => updatePostValue(e)}/>
                 </div>
                 <div>
                     <button onClick={handleAddPost}>Add post</button>

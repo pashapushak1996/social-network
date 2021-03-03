@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./Post.module.css";
 import userImage from '../../../../assets/images/userPhoto.jpg'
-import {deletePostCreator} from "../../../../redux/reducers/profile-reducer";
 
-export const Post = ({message, likesCount, dispatch, id}) => {
+export const Post = ({message, likesCount, id, deletePost}) => {
 
     const onDeletePost = () => {
-        dispatch(deletePostCreator(id))
+        deletePost(id)
     }
     return (
         <div className={styles.item}>

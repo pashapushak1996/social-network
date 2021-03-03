@@ -14,5 +14,4 @@ export const renderEntireTree = () => {
     );
 }
 renderEntireTree();
-debugger;
 store.subscribe(renderEntireTree);

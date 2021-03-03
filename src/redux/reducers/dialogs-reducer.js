@@ -23,7 +23,7 @@ const initialState = {
 }
 
 
-const dialogsReducer = (state = initialState, action) => {
+const  dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE : {
             const newMessage = {id: Math.ceil(Math.random() * 1000), message: state.newMessageText};
