@@ -1,0 +1,44 @@
+.sidebar {
+    padding: 5px;
+    grid-area: nav;
+    background-color: grey;
+}
+
+.item a {
+    text-decoration: none;
+    color: white;
+}
+
+
+.item a:hover {
+    color: gold;
+}
+
+.item a.activeLink {
+    color: gold;
+}
+
+    /*Photo Block*/
+
+.photo {
+    width: 30%;
+    overflow: hidden;
+}
+
+.photo img {
+    height: 50px;
+    width: 50px;
+    transform: translateY(5px);
+}
+
+.photoIconElements {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: lightskyblue;
+}
+
+
