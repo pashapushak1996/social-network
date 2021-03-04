@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 const Music = () => {
     return (
-        <div>
-            Music
-        </div>
+            <div>
+                Music
+            </div>
     );
-}
+};
 
 export default Music;

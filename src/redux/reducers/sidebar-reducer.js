@@ -1,17 +1,17 @@
 const initialState = [
     {
         name: `Max`,
-        photo: "https://freesvg.org/img/abstract-user-flat-4.png"
+        photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
     },
     {
         name: `John`,
-        photo: "https://freesvg.org/img/abstract-user-flat-4.png"
+        photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
     },
     {
         name: `Ivy`,
-        photo: "https://freesvg.org/img/abstract-user-flat-4.png"
-    }
-]
+        photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
+    },
+];
 
 
 const sidebarReducer = (state = initialState, action) => {
@@ -19,7 +19,7 @@ const sidebarReducer = (state = initialState, action) => {
         default:
             return state;
     }
-}
+};
 
 
 export default sidebarReducer;

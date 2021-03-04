@@ -1,7 +1,7 @@
 //Action types
-const ADD_POST = "ADD_POST";
-const CHANGE_POST_TEXT = "CHANGE_POST_TEXT";
-const DELETE_POST = "DELETE_POST";
+const ADD_POST = 'ADD_POST';
+const CHANGE_POST_TEXT = 'CHANGE_POST_TEXT';
+const DELETE_POST = 'DELETE_POST';
 
 //Action creators
 export const addPostCreator = () => ({type: ADD_POST});
@@ -15,39 +15,39 @@ const initialState = {
         {id: 3, message: `i am a programmer`, likesCount: 20},
         {id: 4, message: `It New`, likesCount: 20},
         {id: 5, message: `Yo yo yo motherfucker`, likesCount: 20}],
-    newPostMessage: ''
-}
+    newPostMessage: '',
+};
 
 
 const profileReducer = (state = initialState, action) => {
+    debugger;
     switch (action.type) {
         case ADD_POST : {
             if (state.newPostMessage.length <= 0) {
-                return
+                return state;
             }
             const newPost = {
                 id: Math.ceil(Math.random() * 1000),
                 message: state.newPostMessage,
-                likesCount: Math.ceil(Math.random() * 1000)
+                likesCount: Math.ceil(Math.random() * 1000),
             };
             state.posts.push(newPost);
-            state.newPostMessage = "";
-            return state
+            state.newPostMessage = '';
+            return state;
         }
         case CHANGE_POST_TEXT: {
 
             state.newPostMessage = action.postText;
-            return state
+            return state;
         }
         case DELETE_POST : {
-
-            state.posts = state.posts.filter((post) => post.id !== action.postId);
+            state.posts = state.posts.filter((post) => post.id!==action.postId);
             return state;
         }
         default : {
-            return state
+            return state;
         }
     }
-}
+};
 
 export default profileReducer;
