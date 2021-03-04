@@ -1,10 +1,13 @@
 //Action types
-const ADD_MESSAGE = "ADD_MESSAGE";
-const CHANGE_MESSAGE_TEXT = "CHANGE_MESSAGE_TEXT";
+const ADD_MESSAGE = 'ADD_MESSAGE';
+const CHANGE_MESSAGE_TEXT = 'CHANGE_MESSAGE_TEXT';
 
 //Action creators
 export const addMessageCreator = () => ({type: ADD_MESSAGE});
-export const changeMessageTextCreator = (messageText) => ({type: CHANGE_MESSAGE_TEXT, messageText});
+export const changeMessageTextCreator = (messageText) => ({
+    type: CHANGE_MESSAGE_TEXT,
+    messageText,
+});
 
 const initialState = {
     dialogs: [
@@ -19,17 +22,18 @@ const initialState = {
         {id: 3, message: `I really like you?`},
         {id: 4, message: `You love me Masha?`},
         {id: 5, message: `Yes, of course`}],
-    newMessageText: ''
-}
+    newMessageText: '',
+};
 
-
-const  dialogsReducer = (state = initialState, action) => {
+const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE : {
-            const newMessage = {id: Math.ceil(Math.random() * 1000), message: state.newMessageText};
-            state.messages
-                .push(newMessage);
-            state.newMessageText = "";
+            const newMessage = {
+                id: Math.ceil(Math.random() * 1000),
+                message: state.newMessageText,
+            };
+            state.messages.push(newMessage);
+            state.newMessageText = '';
             return state;
         }
         case CHANGE_MESSAGE_TEXT: {
@@ -37,7 +41,7 @@ const  dialogsReducer = (state = initialState, action) => {
             return state;
         }
         default: {
-            return state
+            return state;
         }
     }
 };

@@ -1,6 +1,6 @@
-import React from "react";
-import {addPostCreator, changePostTextCreator, deletePostCreator} from "../../../redux/reducers/profile-reducer";
-import MyPosts from "./MyPosts";
+import React from 'react';
+import {addPostCreator, changePostTextCreator, deletePostCreator} from '../../../redux/reducers/profile-reducer';
+import MyPosts from './MyPosts';
 
 const MyPostsContainer = ({posts, dispatch, newPostText}) => {
 
@@ -14,14 +14,16 @@ const MyPostsContainer = ({posts, dispatch, newPostText}) => {
     };
 
     const deletePost = (postId) => {
-        debugger;
-        dispatch(deletePostCreator(postId))
-    }
+        dispatch(deletePostCreator(postId));
+    };
 
     return (
-        <MyPosts posts={posts} newPostText={newPostText} updatePostText={changeTextAreaValue} addPost={handleAddPost}
-                 deletePost={deletePost}/>
+            <MyPosts posts={posts}
+                     newPostText={newPostText}
+                     updatePostText={changeTextAreaValue}
+                     addPost={handleAddPost}
+                     deletePost={deletePost}/>
     );
-}
+};
 
 export default MyPostsContainer;
