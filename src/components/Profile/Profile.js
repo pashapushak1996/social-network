@@ -3,13 +3,11 @@ import styles from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 
-const Profile = ({state, dispatch}) => {
+const Profile = () => {
     return (
             <div>
                 <ProfileInfo/>
-                <MyPostsContainer posts={state.posts}
-                                  dispatch={dispatch}
-                                  newPostText={state.newPostMessage}/>
+                <MyPostsContainer/>
             </div>
     );
 };

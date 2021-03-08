@@ -1,17 +1,21 @@
-const initialState = [
-    {
-        name: `Max`,
-        photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
-    },
-    {
-        name: `John`,
-        photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
-    },
-    {
-        name: `Ivy`,
-        photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
-    },
-];
+const ADD_FRIEND = `ADD_FRIEND`;
+
+const initialState = {
+    users: [
+        {
+            name: `Max`,
+            photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
+        },
+        {
+            name: `John`,
+            photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
+        },
+        {
+            name: `Ivy`,
+            photo: 'https://freesvg.org/img/abstract-user-flat-4.png',
+        },
+    ],
+};
 
 
 const sidebarReducer = (state = initialState, action) => {

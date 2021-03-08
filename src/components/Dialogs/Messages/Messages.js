@@ -1,16 +1,15 @@
 import React from 'react';
 import styles from './Messages.module.css';
 import Message from './Message/Message';
-import {addMessageCreator, changeMessageTextCreator} from '../../../redux/reducers/dialogs-reducer';
 
 
-const Messages = ({messages, dispatch, newMessageText}) => {
+const Messages = ({messages, newMessageText, onAddMessage, changeMessageValue}) => {
 
-    const onAddMessage = () => {
-        dispatch(addMessageCreator());
+    const addMessage = () => {
+        onAddMessage();
     };
-    const changeMessageValue = (value) => {
-        dispatch(changeMessageTextCreator(value));
+    const updateMessageValue = (value) => {
+        changeMessageValue(value);
     };
 
     const messageElements = messages.map((el) => <Message key={el.id} message={el.message}/>);
@@ -18,10 +17,10 @@ const Messages = ({messages, dispatch, newMessageText}) => {
     return (
             <div className={styles.messages}>
                 {messageElements}
-                <textarea onChange={({target: {value}}) => changeMessageValue(value)} value={newMessageText}
+                <textarea onChange={({target: {value}}) => updateMessageValue(value)} value={newMessageText}
                           placeholder={`Message text`}/>
                 <div>
-                    <button onClick={onAddMessage}>Add message</button>
+                    <button onClick={addMessage}>Add message</button>
                 </div>
             </div>
     );

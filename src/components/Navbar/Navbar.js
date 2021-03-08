@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './Navbar.module.css';
 import {NavLink} from 'react-router-dom';
 
-const Navbar = ({state}) => {
+const Navbar = ({users}) => {
 
-    const photoIconElements = state.map((el) => {
+    const photoIconElements = users.map((el) => {
         return (
                 <div key={el.name} className={styles.photo}>
                     <b>{el.name}</b>
@@ -29,6 +29,9 @@ const Navbar = ({state}) => {
                 </div>
                 <div className={`${styles.item}`}>
                     <NavLink to={`/settings`} activeClassName={styles.activeLink}>Settings</NavLink>
+                </div>
+                <div className={`${styles.item}`}>
+                    <NavLink to={`/users`} activeClassName={styles.activeLink}>Users</NavLink>
                 </div>
                 <div>
                     <p style={{color: 'white'}}>Friends: </p>

@@ -4,6 +4,7 @@ import {Post} from './Post/Post';
 
 const MyPosts = ({posts, newPostText, addPost, updatePostText, deletePost}) => {
 
+
     const postDataElement = posts.map((post) => <Post
             deletePost={deletePost}
             id={post.id}
@@ -11,7 +12,8 @@ const MyPosts = ({posts, newPostText, addPost, updatePostText, deletePost}) => {
             message={post.message}
             likesCount={post.likesCount}/>);
 
-    const updatePostValue = (value) => {
+    const updatePostValue = (e) => {
+        const value = e.target.value;
         updatePostText(value);
     };
 

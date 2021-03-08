@@ -32,13 +32,10 @@ const dialogsReducer = (state = initialState, action) => {
                 id: Math.ceil(Math.random() * 1000),
                 message: state.newMessageText,
             };
-            state.messages.push(newMessage);
-            state.newMessageText = '';
-            return state;
+            return {...state, messages: [...state.messages, newMessage], newMessageText: ''};
         }
         case CHANGE_MESSAGE_TEXT: {
-            state.newMessageText = action.messageText;
-            return state;
+            return {...state, newMessageText: action.messageText};
         }
         default: {
             return state;

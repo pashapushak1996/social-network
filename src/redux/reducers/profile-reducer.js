@@ -3,10 +3,12 @@ const ADD_POST = 'ADD_POST';
 const CHANGE_POST_TEXT = 'CHANGE_POST_TEXT';
 const DELETE_POST = 'DELETE_POST';
 
+
 //Action creators
 export const addPostCreator = () => ({type: ADD_POST});
 export const changePostTextCreator = (postText) => ({type: CHANGE_POST_TEXT, postText});
 export const deletePostCreator = (postId) => ({type: DELETE_POST, postId});
+
 
 const initialState = {
     posts: [
@@ -20,29 +22,21 @@ const initialState = {
 
 
 const profileReducer = (state = initialState, action) => {
-    debugger;
+
     switch (action.type) {
         case ADD_POST : {
-            if (state.newPostMessage.length <= 0) {
-                return state;
-            }
             const newPost = {
                 id: Math.ceil(Math.random() * 1000),
                 message: state.newPostMessage,
                 likesCount: Math.ceil(Math.random() * 1000),
             };
-            state.posts.push(newPost);
-            state.newPostMessage = '';
-            return state;
+            return {...state, posts: [...state.posts, newPost], newPostMessage: ''};
         }
         case CHANGE_POST_TEXT: {
-
-            state.newPostMessage = action.postText;
-            return state;
+            return {...state, newPostMessage: action.postText};
         }
         case DELETE_POST : {
-            state.posts = state.posts.filter((post) => post.id!==action.postId);
-            return state;
+            return {...state, posts: state.posts.filter((post) => post.id!==action.postId)};
         }
         default : {
             return state;
