@@ -15,14 +15,12 @@ import Preloader from "../Preloader/Preloader";
 class UsersAPIComponent extends React.Component {
     componentDidMount() {
         if (this.props.users.length !== 0) {
-            this.props.setIsFetching(false);
             return
         }
         this.props.setIsFetching(true);
         axios
             .get(`https://social-network.samuraijs.com/api/1.0/users?page=${ this.props.currentPage }&count=${ this.props.pageSize }`)
             .then(res => {
-                debugger;
                 this.props.setUsersTotalCount(res.data.totalCount);
                 this.props.setUsers(res.data.items);
                 this.props.setIsFetching(false);

@@ -9,13 +9,14 @@ import {withRouter} from "react-router-dom";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
-        const {match:{params:{id}}} = this.props;
-        this.props.setIsFetching(true);
+        let {match: {params: {id}}} = this.props;
+        if (!id) {
+            id = 2
+        }
         axios
-            .get(`https://social-network.samuraijs.com/api/1.0/profile/${id}`)
+            .get(`https://social-network.samuraijs.com/api/1.0/profile/${ id }`)
             .then(res => {
                 this.props.setUserProfile(res.data);
-                this.props.setIsFetching(false);
             });
     };
 
@@ -28,8 +29,9 @@ const mapStateToProps = (state) => ({
     profile: state.profilePage.profile
 });
 
+const ProfileContainerWithRouter = withRouter(ProfileContainer)
 
-export default withRouter(connect(mapStateToProps, {
+export default connect(mapStateToProps, {
     setUserProfile,
     setIsFetching
-})(ProfileContainer));
+})(ProfileContainerWithRouter);

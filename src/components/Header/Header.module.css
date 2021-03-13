@@ -7,3 +7,12 @@
     padding: 10px;
     width: 50px;
 }
+
+.login {
+    float: right;
+}
+
+.login a {
+    color: white;
+    text-decoration: none;
+}
