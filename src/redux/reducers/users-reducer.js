@@ -5,6 +5,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_USERS_TOTAL_COUNT = 'SET_TOTAL_COUNT';
 const SET_IS_FETCHING = 'SET_IS_FETCHING';
+const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
 
 //Action creators
 
@@ -14,13 +15,15 @@ export const setUsers = (users) => ({type: SET_USERS, users});
 export const setCurrentPage = (page) => ({type: SET_CURRENT_PAGE, page});
 export const setUsersTotalCount = (totalCount) => ({type: SET_USERS_TOTAL_COUNT, totalCount});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, isFetching});
+export const setErrorMessage = (error) => ({type: SET_ERROR_MESSAGE, error});
 
 const initialState = {
     users: [],
     totalCount: null,
     pageSize: 100,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    errorMessage: '',
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -63,6 +66,11 @@ const usersReducer = (state = initialState, action) => {
         case SET_IS_FETCHING: {
             return {
                 ...state, isFetching: action.isFetching
+            }
+        }
+        case SET_ERROR_MESSAGE: {
+            return {
+                ...state, errorMessage: action.error
             }
         }
         default:

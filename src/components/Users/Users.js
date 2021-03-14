@@ -10,15 +10,18 @@ const Users = (props) => {
         pages.push(i);
     }
 
+
+
     return (
         <div>
             <div>
                 { pages.map((p) => {
-                    return <span key={p} className={ props.currentPage === p ? styles.selectedPage : undefined }
+                    return <span key={ p } className={ props.currentPage === p ? styles.selectedPage : undefined }
                                  onClick={ () => props.switchCurrentPage(p) }> { p }</span>;
                 }) }
             </div>
-            { props.users.map((user) => <User key={ user.id } user={ user } follow={ props.followUser }
+            {props.errorMessage.length > 0 ? <div className={styles.error}>{props.errorMessage}</div> : null}
+            { props.users.map((user) => <User setErrorMessage={props.setErrorMessage} key={ user.id } user={ user } follow={ props.followUser }
                                               unfollow={ props.unfollowUser }/>) }
         </div>
     );
