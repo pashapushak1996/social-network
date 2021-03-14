@@ -3,39 +3,27 @@ import userImage from '../../../assets/images/ProfileImage.svg';
 import styles from './User.module.css';
 import {NavLink} from "react-router-dom";
 import axios from "axios";
+import {usersService} from "../../../services/users-service";
 
-const User = ({user, follow, unfollow,setErrorMessage}) => {
+const User = ({user, follow, unfollow}) => {
 
     const followUser = (id) => {
-        axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${ id }`, {}, {
-                withCredentials: true,
-                headers: {
-                    'API-KEY': '34d11c8b-f8d3-4701-b00b-af8f93333a60'
+        usersService.followUser(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    follow(id);
                 }
-            }
-        ).then(res => {
-            if (res.data.resultCode === 0) {
-                follow(id);
-            }else {
-                setErrorMessage(res.data.messages[0])
-            }
-
-        })
+            })
 
     };
 
     const unfollowUser = (id) => {
-        axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${ id }`, {
-                withCredentials: true,
-                headers: {
-                    'API-KEY': '34d11c8b-f8d3-4701-b00b-af8f93333a60'
+        usersService.unfollowUser(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    unfollow(id);
                 }
-            }
-        ).then(res => {
-            if (res.data.resultCode === 0) {
-                unfollow(id);
-            }
-        })
+            })
 
     };
 

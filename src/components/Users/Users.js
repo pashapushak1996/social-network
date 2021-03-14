@@ -20,8 +20,7 @@ const Users = (props) => {
                                  onClick={ () => props.switchCurrentPage(p) }> { p }</span>;
                 }) }
             </div>
-            {props.errorMessage.length > 0 ? <div className={styles.error}>{props.errorMessage}</div> : null}
-            { props.users.map((user) => <User setErrorMessage={props.setErrorMessage} key={ user.id } user={ user } follow={ props.followUser }
+            { props.users.map((user) => <User key={ user.id } user={ user } follow={ props.followUser }
                                               unfollow={ props.unfollowUser }/>) }
         </div>
     );

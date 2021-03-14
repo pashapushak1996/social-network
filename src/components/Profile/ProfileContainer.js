@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {setUserProfile} from "../../redux/reducers/profile-reducer";
 import {setIsFetching} from "../../redux/reducers/users-reducer";
 import {withRouter} from "react-router-dom";
+import {profileService} from "../../services/profile-service";
 
 
 class ProfileContainer extends React.Component {
@@ -13,10 +14,9 @@ class ProfileContainer extends React.Component {
         if (!id) {
             id = 2
         }
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/profile/${ id }`)
-            .then(res => {
-                this.props.setUserProfile(res.data);
+        profileService.getUserProfile(id)
+            .then(data => {
+                this.props.setUserProfile(data);
             });
     };
 
