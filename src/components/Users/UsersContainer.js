@@ -1,8 +1,7 @@
 import {connect} from 'react-redux';
 import {
     follow,
-    setCurrentPage,
-    setErrorMessage,
+    setCurrentPage, toggleFollowingInProgress,
     setIsFetching,
     setUsers,
     setUsersTotalCount,
@@ -19,7 +18,7 @@ class UsersAPIComponent extends React.Component {
             return
         }
         this.props.setIsFetching(true);
-        usersService.getUsers(this.props.currentPage,this.props.pageSize)
+        usersService.getUsers(this.props.currentPage, this.props.pageSize)
             .then(data => {
                 this.props.setUsersTotalCount(data.totalCount);
                 this.props.setUsers(data.items);
@@ -31,7 +30,7 @@ class UsersAPIComponent extends React.Component {
     switchCurrentPage = (page) => {
         this.props.setIsFetching(true);
         this.props.setCurrentPage(page);
-       usersService.getUsers(page,this.props.pageSize)
+        usersService.getUsers(page, this.props.pageSize)
             .then(data => {
                 this.props.setUsers(data.items);
                 this.props.setIsFetching(false);
@@ -40,7 +39,6 @@ class UsersAPIComponent extends React.Component {
 
     render() {
         return this.props.isFetching ? <Preloader/> : <Users
-            errorMessage={ this.props.errorMessage }
             users={ this.props.users }
             followUser={ this.props.follow }
             unfollowUser={ this.props.unfollow }
@@ -48,7 +46,8 @@ class UsersAPIComponent extends React.Component {
             currentPage={ this.props.currentPage }
             totalCount={ this.props.totalCount }
             pageSize={ this.props.pageSize }
-            setErrorMessage={ this.props.setErrorMessage }/>;
+            followingInProgress={ this.props.followingInProgress }
+            toggleFollowingInProgress={ this.props.toggleFollowingInProgress }/>;
     }
 }
 
@@ -59,7 +58,7 @@ const mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        errorMessage: state.usersPage.errorMessage
+        followingInProgress: state.usersPage.followingInProgress
     };
 };
 
@@ -94,7 +93,7 @@ const UserContainer = connect(mapStateToProps, {
     setCurrentPage,
     setUsersTotalCount,
     setIsFetching,
-    setErrorMessage
+    toggleFollowingInProgress
 })(UsersAPIComponent);
 
 export default UserContainer;

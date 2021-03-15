@@ -11,7 +11,6 @@ const Users = (props) => {
     }
 
 
-
     return (
         <div>
             <div>
@@ -20,7 +19,9 @@ const Users = (props) => {
                                  onClick={ () => props.switchCurrentPage(p) }> { p }</span>;
                 }) }
             </div>
-            { props.users.map((user) => <User key={ user.id } user={ user } follow={ props.followUser }
+            { props.users.map((user) => <User followingInProgress={ props.followingInProgress }
+                                              toggleFollowingInProgress={ props.toggleFollowingInProgress }
+                                              key={ user.id } user={ user } follow={ props.followUser }
                                               unfollow={ props.unfollowUser }/>) }
         </div>
     );
