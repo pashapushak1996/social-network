@@ -1,4 +1,6 @@
 //Action types
+import {usersService} from "../../services/users-service";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -9,8 +11,8 @@ const TOGGLE_FOLLOWING_IN_PROGRESS = 'TOGGLE_FOLLOWING_IN_PROGRESS';
 
 //Action creators
 
-export const follow = (userId) => ({type: FOLLOW, userId});
-export const unfollow = (userId) => ({type: UNFOLLOW, userId});
+export const followSuccess = (userId) => ({type: FOLLOW, userId});
+export const unfollowSuccess = (userId) => ({type: UNFOLLOW, userId});
 export const setUsers = (users) => ({type: SET_USERS, users});
 export const setCurrentPage = (page) => ({type: SET_CURRENT_PAGE, page});
 export const setUsersTotalCount = (totalCount) => ({type: SET_USERS_TOTAL_COUNT, totalCount});
@@ -81,6 +83,40 @@ const usersReducer = (state = initialState, action) => {
         default:
             return state;
     }
+};
+
+//THUNK CREATORS
+
+export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+    dispatch(setIsFetching(true));
+    usersService.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(setUsersTotalCount(data.totalCount));
+            dispatch(setUsers(data.items));
+            dispatch(setIsFetching(false));
+        });
+};
+
+export const followUserThunkCreator = (id) => (dispatch) => {
+    dispatch(toggleFollowingInProgress(true, id));
+    usersService.followUser(id)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(followSuccess(id));
+            }
+            dispatch(toggleFollowingInProgress(false, id));
+        });
+};
+
+export const unfollowUserThunkCreator = (id) => (dispatch) => {
+    dispatch(toggleFollowingInProgress(true, id));
+    usersService.unfollowUser(id)
+        .then(data => {
+            if (data.resultCode === 0) {
+                dispatch(unfollowSuccess(id));
+            }
+            dispatch(toggleFollowingInProgress(false, id));
+        });
 };
 
 export default usersReducer;

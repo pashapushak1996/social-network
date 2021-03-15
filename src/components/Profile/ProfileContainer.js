@@ -1,11 +1,8 @@
 import React from 'react';
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/reducers/profile-reducer";
-import {setIsFetching} from "../../redux/reducers/users-reducer";
+import {getProfileThunkCreator} from "../../redux/reducers/profile-reducer";
 import {withRouter} from "react-router-dom";
-import {profileService} from "../../services/profile-service";
 
 
 class ProfileContainer extends React.Component {
@@ -14,10 +11,7 @@ class ProfileContainer extends React.Component {
         if (!id) {
             id = 2
         }
-        profileService.getUserProfile(id)
-            .then(data => {
-                this.props.setUserProfile(data);
-            });
+        this.props.getProfileThunkCreator(id);
     };
 
     render() {
@@ -32,6 +26,5 @@ const mapStateToProps = (state) => ({
 const ProfileContainerWithRouter = withRouter(ProfileContainer)
 
 export default connect(mapStateToProps, {
-    setUserProfile,
-    setIsFetching
+    getProfileThunkCreator
 })(ProfileContainerWithRouter);

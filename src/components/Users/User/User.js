@@ -2,30 +2,15 @@ import React from 'react';
 import userImage from '../../../assets/images/ProfileImage.svg';
 import styles from './User.module.css';
 import {NavLink} from "react-router-dom";
-import {usersService} from "../../../services/users-service";
 
-const User = ({user, follow, unfollow, toggleFollowingInProgress, followingInProgress}) => {
+const User = ({user, followUserThunk, unfollowUserThunk, followingInProgress}) => {
 
     const followUser = (id) => {
-        toggleFollowingInProgress(true, id);
-        usersService.followUser(id)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    follow(id);
-                }
-                toggleFollowingInProgress(false, id)
-            });
+        followUserThunk(id);
     };
 
     const unfollowUser = (id) => {
-        toggleFollowingInProgress(true, id);
-        usersService.unfollowUser(id)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    unfollow(id);
-                }
-                toggleFollowingInProgress(false, id);
-            });
+        unfollowUserThunk(id)
     };
 
     return (

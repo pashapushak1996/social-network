@@ -1,4 +1,6 @@
 //Action types
+import {profileService} from "../../services/profile-service";
+
 const ADD_POST = 'ADD_POST';
 const CHANGE_POST_TEXT = 'CHANGE_POST_TEXT';
 const DELETE_POST = 'DELETE_POST';
@@ -51,6 +53,14 @@ const profileReducer = (state = initialState, action) => {
             return state;
         }
     }
+};
+
+
+export const getProfileThunkCreator = (id) => (dispatch) => {
+    profileService.getUserProfile(id)
+        .then(data => {
+           dispatch(setUserProfile(data));
+        });
 };
 
 export default profileReducer;
