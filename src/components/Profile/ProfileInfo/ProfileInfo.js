@@ -2,8 +2,11 @@ import React from 'react';
 import styles from './ProfileInfo.module.css';
 import Preloader from "../../Preloader/Preloader";
 import profilePhoto from '../../../assets/images/ProfileImage.svg'
+import ProfileStatus from "./ProfileStatus";
 
-const ProfileInfo = ({profile}) => {
+
+const ProfileInfo = ({profile, status, updateProfileStatus}) => {
+
     if (!profile) {
         return <Preloader/>
     }
@@ -21,7 +24,7 @@ const ProfileInfo = ({profile}) => {
                     <h3>{ profile.fullName }</h3>
                 </div>
                 <div>
-                    <b>About me: { profile.aboutMe }</b>
+                    <ProfileStatus status={ status } updateProfileStatus={ updateProfileStatus }/>
                 </div>
             </div>
         </div>
