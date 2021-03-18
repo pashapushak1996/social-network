@@ -6,7 +6,6 @@ import ProfileStatus from "./ProfileStatus";
 
 
 const ProfileInfo = ({profile, status, updateProfileStatus}) => {
-
     if (!profile) {
         return <Preloader/>
     }

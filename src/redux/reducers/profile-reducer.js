@@ -69,13 +69,12 @@ export const getProfileStatusThunkCreator = (id) => (dispatch) => {
 };
 
 export const updateProfileStatus = (status) => (dispatch) => {
-    profileService.updateStatus(status).then(
-        data => {
-            if(data.resultCode ===0){
+    profileService.updateStatus(status).then(data => {
+            if (data.resultCode === 0) {
                 dispatch(setUserStatus(status));
             }
         }
-    )
+    );
 };
 
 export default profileReducer;

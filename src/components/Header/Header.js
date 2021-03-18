@@ -9,10 +9,12 @@ const Header = (props) => {
         <header className={ styles.header }>
             <img src={ logo } alt=""/>
             <div className={ styles.login }>
-                { props.isAuth ? <div>{ props.login }</div> : <NavLink to={ `/login` }>
+                { props.isAuth ? <div>
+                    <span> { props.login }</span>
+                    <button onClick={ () => props.logoutThunk() }>Logout</button>
+                </div> : <NavLink to={ `/login` }>
                     Login
                 </NavLink> }
-
             </div>
         </header>
     );

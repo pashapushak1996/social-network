@@ -21,6 +21,15 @@ class ProfileContainer extends React.Component {
         this.props.getProfileStatusThunkCreator(id);
     };
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        let {match: {params: {id}}} = this.props;
+        if (!id) {
+            id = 14564
+        }
+        this.props.getProfileStatusThunkCreator(id);
+    }
+
+
     render() {
         return <Profile { ...this.props }/>
     };
@@ -34,5 +43,5 @@ const mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps, {getProfileThunkCreator, getProfileStatusThunkCreator,updateProfileStatus}),
     withRouter,
-    withAuthRedirect
+    withAuthRedirect,
 )(ProfileContainer);
