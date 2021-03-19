@@ -21,27 +21,23 @@ class ProfileContainer extends React.Component {
         this.props.getProfileStatusThunkCreator(id);
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        let {match: {params: {id}}} = this.props;
-        if (!id) {
-            id = 14564
-        }
-        this.props.getProfileStatusThunkCreator(id);
-    }
-
 
     render() {
-        return <Profile { ...this.props }/>
+        return <Profile { ...this.props }
+                        status={ this.props.status }
+                        profile={ this.props.profile }
+                        updateProfileStatus={ this.props.updateProfileStatus }/>
     };
 }
 
-const mapStateToProps = (state) => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status
-});
+const mapStateToProps = (state) => {
+    return {
+        profile: state.profilePage.profile,
+        status: state.profilePage.status
+    };
+};
 
 export default compose(
-    connect(mapStateToProps, {getProfileThunkCreator, getProfileStatusThunkCreator,updateProfileStatus}),
-    withRouter,
-    withAuthRedirect,
+    connect(mapStateToProps, {getProfileThunkCreator, getProfileStatusThunkCreator, updateProfileStatus}),
+    withRouter
 )(ProfileContainer);

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ProfileInfo.module.css';
-import Preloader from "../../Preloader/Preloader";
+import Preloader from "../../common/Preloader/Preloader";
 import profilePhoto from '../../../assets/images/ProfileImage.svg'
 import ProfileStatus from "./ProfileStatus";
 
@@ -9,7 +9,6 @@ const ProfileInfo = ({profile, status, updateProfileStatus}) => {
     if (!profile) {
         return <Preloader/>
     }
-
     return (
         <div>
             <div>

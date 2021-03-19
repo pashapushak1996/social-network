@@ -20,7 +20,7 @@ const initialState = {
         {id: 4, message: `It New`, likesCount: 20},
         {id: 5, message: `Yo yo yo motherfucker`, likesCount: 20}],
     profile: null,
-    status: null,
+    status: '',
 };
 
 
@@ -70,7 +70,7 @@ export const getProfileStatusThunkCreator = (id) => (dispatch) => {
 
 export const updateProfileStatus = (status) => (dispatch) => {
     profileService.updateStatus(status).then(data => {
-            if (data.resultCode === 0) {
+            if (data.data.resultCode === 0) {
                 dispatch(setUserStatus(status));
             }
         }

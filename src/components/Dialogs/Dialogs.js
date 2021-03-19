@@ -4,14 +4,12 @@ import DialogsItems from './DialogsItems/DialogsItems';
 import Messages from './Messages/Messages';
 
 
-const Dialogs = ({dialogsPage, onAddMessage, changeMessageValue}) => {
+const Dialogs = ({dialogsPage, onAddMessage}) => {
     return (
         <div className={ styles.dialogs }>
             <DialogsItems dialogs={ dialogsPage.dialogs }/>
             <Messages messages={ dialogsPage.messages }
-                      newMessageText={ dialogsPage.newMessageText }
-                      onAddMessage={ onAddMessage }
-                      changeMessageValue={ changeMessageValue }/>
+                      onAddMessage={ onAddMessage }/>
         </div>
     );
 };

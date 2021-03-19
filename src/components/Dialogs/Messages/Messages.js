@@ -1,28 +1,22 @@
 import React from 'react';
 import styles from './Messages.module.css';
 import Message from './Message/Message';
+import MessagesForm from "./AddMessageForm";
 
 
-const Messages = ({messages, newMessageText, onAddMessage, changeMessageValue}) => {
+const Messages = ({messages, onAddMessage}) => {
 
-    const addMessage = () => {
-        onAddMessage();
-    };
-    const updateMessageValue = (value) => {
-        changeMessageValue(value);
+    const addMessage = ({messageText}) => {
+        onAddMessage(messageText);
     };
 
-    const messageElements = messages.map((el) => <Message key={el.id} message={el.message}/>);
+    const messageElements = messages.map((el) => <Message key={ el.id } message={ el.message }/>);
 
     return (
-            <div className={styles.messages}>
-                {messageElements}
-                <textarea onChange={({target: {value}}) => updateMessageValue(value)} value={newMessageText}
-                          placeholder={`Message text`}/>
-                <div>
-                    <button onClick={addMessage}>Add message</button>
-                </div>
-            </div>
+        <div className={ styles.messages }>
+            { messageElements }
+            <MessagesForm onSubmit={ addMessage }/>
+        </div>
     );
 };
 export default Messages;
