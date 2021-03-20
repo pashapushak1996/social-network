@@ -7,6 +7,7 @@ import {
 import React from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {getUsers} from "../../redux/selectors/users-selectors";
 
 class UsersAPIComponent extends React.Component {
     componentDidMount() {
@@ -37,7 +38,7 @@ class UsersAPIComponent extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
+        users: getUsers(state),
         totalCount: state.usersPage.totalCount,
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,
