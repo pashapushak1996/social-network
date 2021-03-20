@@ -4,14 +4,16 @@ import styles from './Header.module.css';
 import {NavLink} from "react-router-dom";
 
 const Header = (props) => {
-
     return (
         <header className={ styles.header }>
             <img src={ logo } alt=""/>
             <div className={ styles.login }>
                 { props.isAuth ? <div>
                     <span> { props.login }</span>
-                    <button onClick={ () => props.logoutThunk() }>Logout</button>
+                    <button onClick={ () => {
+                        props.logoutThunk()
+                    } }>Logout
+                    </button>
                 </div> : <NavLink to={ `/login` }>
                     Login
                 </NavLink> }
