@@ -1,6 +1,12 @@
+import {createSelector} from "reselect";
+
 export const getUsers = (state) => {
     return state.usersPage.users;
 };
+
+export const getFollowedUsersId = (state) => {
+    return state.sideBar.followedUsers
+}
 
 export const getTotalCount = (state) => {
     return state.usersPage.totalCount;
@@ -22,9 +28,9 @@ export const getFollowingInProgress = (state) => {
     return state.usersPage.followingInProgress;
 };
 
-export const getFollowedUser = () => {
-
-};
+export const getFollowedUser = createSelector(getUsers, (users) => {
+    return users.filter((user) => user.followed === true);
+})
 
 
 

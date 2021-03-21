@@ -29,6 +29,7 @@
     height: 50px;
     width: 50px;
     transform: translateY(5px);
+    border-radius: 30px;
 }
 
 .photoIconElements {

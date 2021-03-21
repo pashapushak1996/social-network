@@ -19,7 +19,7 @@ const Users = (props) => {
                                  onClick={ () => props.switchCurrentPage(p) }> { p }</span>;
                 }) }
             </div>
-            { props.users.map((user) => <User followingInProgress={ props.followingInProgress }
+            { props.users.map((user) => <User addFollowedUser={props.addFollowedUser} followingInProgress={ props.followingInProgress }
                                               key={ user.id } user={ user } followUserThunk={ props.followUserThunk }
                                               unfollowUserThunk={ props.unfollowUserThunk }/>) }
         </div>

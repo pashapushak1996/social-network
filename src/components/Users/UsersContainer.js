@@ -4,7 +4,7 @@ import {
     getUsersThunkCreator, setCurrentPage,
     unfollowUserThunkCreator,
 } from '../../redux/reducers/users-reducer';
-import React from "react";
+import React, {useEffect} from "react";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import {
@@ -15,31 +15,30 @@ import {
     getUsers
 } from "../../redux/selectors/users-selectors";
 
-class UsersAPIComponent extends React.Component {
-    componentDidMount() {
-        if (this.props.users.length !== 0) {
+const UsersAPIComponent = (props) => {
+
+    useEffect(() => {
+        if (props.users.length !== 0) {
             return
         }
-        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
+        props.getUsersThunkCreator(props.currentPage, props.pageSize)
+    }, []);
+
+    const switchCurrentPage = (page) => {
+        props.setCurrentPage(page);
+        props.getUsersThunkCreator(page, props.pageSize)
     };
 
+    return props.isFetching ? <Preloader/> : <Users
+        users={ props.users }
+        followUserThunk={ props.followUserThunkCreator }
+        unfollowUserThunk={ props.unfollowUserThunkCreator }
+        switchCurrentPage={ switchCurrentPage }
+        currentPage={ props.currentPage }
+        totalCount={ props.totalCount }
+        pageSize={ props.pageSize }
+        followingInProgress={ props.followingInProgress }/>;
 
-    switchCurrentPage = (page) => {
-        this.props.setCurrentPage(page);
-        this.props.getUsersThunkCreator(page, this.props.pageSize)
-    };
-
-    render() {
-        return this.props.isFetching ? <Preloader/> : <Users
-            users={ this.props.users }
-            followUserThunk={ this.props.followUserThunkCreator }
-            unfollowUserThunk={ this.props.unfollowUserThunkCreator }
-            switchCurrentPage={ this.switchCurrentPage }
-            currentPage={ this.props.currentPage }
-            totalCount={ this.props.totalCount }
-            pageSize={ this.props.pageSize }
-            followingInProgress={ this.props.followingInProgress }/>;
-    }
 }
 
 const mapStateToProps = (state) => {
@@ -81,7 +80,7 @@ const UserContainer = connect(mapStateToProps, {
     followUserThunkCreator,
     unfollowUserThunkCreator,
     getUsersThunkCreator,
-    setCurrentPage
+    setCurrentPage,
 })(UsersAPIComponent);
 
 export default UserContainer;
