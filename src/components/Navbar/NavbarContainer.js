@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 const mapStateToProps = (state) => {
     return {
-        users: state.sideBar.users,
+        followedUsers: state.sideBar.followedUsers,
     };
 };
 

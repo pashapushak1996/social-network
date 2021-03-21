@@ -4,25 +4,25 @@ import LoginReduxForm from "./LoginReduxForm";
 import {connect} from "react-redux";
 import {loginThunkCreator} from "../../redux/reducers/auth-reducer";
 import {Redirect} from "react-router-dom";
+import {getIsAuth} from "../../redux/selectors/auth-selectors";
 
 
 const Login = (props) => {
-    const Hello = ({email, password, rememberMe, captcha}) => {
+    const login = ({email, password, rememberMe, captcha}) => {
         props.loginThunkCreator(email, password, rememberMe, captcha);
-    }
-    console.log(props);
+    };
     return (
         props.isAuth ? <Redirect to={ `/profile` }/>
             : <div className={ styles.formContainer }>
                 <h1>Login</h1>
-                <LoginReduxForm onSubmit={ Hello }/>
+                <LoginReduxForm onSubmit={ login }/>
                 { props.captchaURL && <img src={ props.captchaURL } alt=""/> }
             </div>)
 
 };
 
 const mapStateToProps = (state) => ({
-    isAuth: state.auth.isAuth,
+    isAuth: getIsAuth(state),
     captchaURL: state.auth.captchaURL
 });
 

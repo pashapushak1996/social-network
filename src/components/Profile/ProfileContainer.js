@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
@@ -8,48 +8,37 @@ import {
 } from "../../redux/reducers/profile-reducer";
 import {withRouter} from "react-router-dom";
 import {compose} from "redux";
+import {getProfile, getStatus} from "../../redux/selectors/profile-selectors";
+import {getAuthUserId, getIsAuth} from "../../redux/selectors/auth-selectors";
 
 
-class ProfileContainer extends React.Component {
-    componentDidMount() {
-        let {match: {params: {id}}} = this.props;
+const ProfileContainer = (props) => {
+
+    useEffect(() => {
+        let {match: {params: {id}}} = props;
         if (!id) {
-            id = this.props.authorizedUserId;
+            id = props.authorizedUserId;
             if (!id) {
-                this.props.history.push(`/login`);
+                props.history.push(`/login`);
             }
         }
-        this.props.getProfileThunkCreator(id);
-        this.props.getProfileStatusThunkCreator(id);
-    };
+        props.getProfileThunkCreator(id);
+        props.getProfileStatusThunkCreator(id);
+    }, [props.authorizedUserId]);
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        let {match: {params: {id}}} = this.props;
-        if (!id) {
-            id = this.props.authorizedUserId;
-            if (!id) {
-                this.props.history.push(`/login`);
-            }
-        }
-        this.props.getProfileThunkCreator(id);
-        this.props.getProfileStatusThunkCreator(id);
-    }
+    return <Profile { ...props }
+                    status={ props.status }
+                    profile={ props.profile }
+                    updateProfileStatus={ props.updateProfileStatus }/>
 
-
-    render() {
-        return <Profile { ...this.props }
-                        status={ this.props.status }
-                        profile={ this.props.profile }
-                        updateProfileStatus={ this.props.updateProfileStatus }/>
-    };
 }
 
 const mapStateToProps = (state) => {
     return {
-        profile: state.profilePage.profile,
-        status: state.profilePage.status,
-        authorizedUserId: state.auth.userId,
-        isAuth: state.auth.isAuth
+        profile: getProfile(state),
+        status: getStatus(state),
+        authorizedUserId: getAuthUserId(state),
+        isAuth: getIsAuth(state)
     };
 };
 

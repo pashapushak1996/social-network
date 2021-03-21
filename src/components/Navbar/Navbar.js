@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './Navbar.module.css';
 import {NavLink} from 'react-router-dom';
 
-const Navbar = ({users}) => {
+const Navbar = ({followedUsers}) => {
 
-    const photoIconElements = users.map((el) => {
+    const photoIconElements = followedUsers.map((el) => {
         return (
                 <div key={el.name} className={styles.photo}>
                     <b>{el.name}</b>
