@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Music.module.css';
-import Paginator from "../Paginator/Paginator";
+import Paginator from "../common/Paginator/Paginator";
 
 const Music = ({tracks, currPage, totalCount, switchCurrentPage, sizeOfPage}) => {
 
@@ -19,8 +19,8 @@ const Music = ({tracks, currPage, totalCount, switchCurrentPage, sizeOfPage}) =>
 
     return (
         <div>
-            <Paginator totalCount={ totalCount } pageSize={ sizeOfPage } currentPage={ currPage }
-                       switchCurrentPage={ switchCurrentPage }/>
+            <Paginator totalItemCount={ totalCount } pageSize={ sizeOfPage } currentPage={ currPage }
+                       switchCurrentPage={ switchCurrentPage } portionSize={10}/>
             <div className={ styles.items }>
                 { tracksElements }
             </div>

@@ -25,7 +25,7 @@ export const toggleFollowingInProgress = (isFetching, userId) => ({
 const initialState = {
     users: [],
     totalCount: null,
-    pageSize: 100,
+    pageSize: 10,
     currentPage: 1,
     isFetching: false,
     followingInProgress: [],

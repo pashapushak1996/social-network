@@ -1,14 +1,15 @@
 import {connect} from 'react-redux';
 import {
     followUserThunkCreator,
-    getUsersThunkCreator, setCurrentPage,
+    getUsersThunkCreator,
+    setCurrentPage,
     unfollowUserThunkCreator,
 } from '../../redux/reducers/users-reducer';
 import React, {useEffect} from "react";
 import Users from "./Users";
-import Preloader from "../common/Preloader/Preloader";
 import {
-    getCurrentPage, getFollowingInProgress,
+    getCurrentPage,
+    getFollowingInProgress,
     getIsFetching,
     getPageSize,
     getTotalCount,
@@ -29,7 +30,8 @@ const UsersAPIComponent = (props) => {
         props.getUsersThunkCreator(page, props.pageSize)
     };
 
-    return props.isFetching ? <Preloader/> : <Users
+    return <Users
+        isFetching={ props.isFetching }
         users={ props.users }
         followUserThunk={ props.followUserThunkCreator }
         unfollowUserThunk={ props.unfollowUserThunkCreator }
