@@ -39,37 +39,32 @@ export const setAuthData = (userId, login, email, isAuth) => ({
 
 //THUNK CREATORS
 
-export const setAuthDataThunkCreator = () => (dispatch) => {
-    return authService.getAuthData()
-        .then(data => {
-            if (data.resultCode === 0) {
-                const {id, email, login} = data.data;
-                dispatch(setAuthData(id, login, email, true));
-            }
-        });
+export const setAuthDataThunkCreator = () => async (dispatch) => {
+    const data = await authService.getAuthData();
+    if (data.resultCode === 0) {
+        const {id, email, login} = data.data;
+        dispatch(setAuthData(id, login, email, true));
+    }
 };
 
-const getCaptcha = () => (dispatch) => {
-    authService.getCaptcha().then(res => {
-        dispatch(setCaptcha(res.url));
-    });
+const getCaptcha = () => async (dispatch) => {
+    const {url} = await authService.getCaptcha();
+    dispatch(setCaptcha(url));
 };
 
-export const loginThunkCreator = (email, password, rememberMe, captcha) => (dispatch) => {
-    authService.login(email, password, rememberMe, captcha).then(res => {
-        if (res.resultCode === 0) dispatch(setAuthDataThunkCreator());
-        if (res.resultCode === 10) dispatch(getCaptcha());
-        if (res.resultCode === 1) dispatch(stopSubmit("login", {_error: res.messages[0]}));
-
-    });
+export const loginThunkCreator = (email, password, rememberMe, captcha) => async (dispatch) => {
+    const {resultCode, messages} = await authService.login(email, password, rememberMe, captcha);
+    if (resultCode === 0) dispatch(setAuthDataThunkCreator());
+    if (resultCode === 10) dispatch(getCaptcha());
+    if (resultCode === 1) dispatch(stopSubmit("login", {_error: messages[0]}));
 };
 
-export const logoutThunk = () => (dispatch) => {
-    authService.logout().then(res => {
-        if (res.resultCode === 0) {
-            dispatch(setAuthData(null, null, null, false));
-        }
-    });
+export const logoutThunk = () => async (dispatch) => {
+    const res = await authService.logout();
+    if (res.resultCode === 0) {
+        dispatch(setAuthData(null, null, null, false));
+    }
+
 };
 
 

@@ -5,6 +5,7 @@ import Messages from './Messages/Messages';
 
 
 const Dialogs = ({dialogsPage, onAddMessage}) => {
+
     return (
         <div className={ styles.dialogs }>
             <DialogsItems dialogs={ dialogsPage.dialogs }/>

@@ -1,25 +1,15 @@
 import React from 'react';
 import styles from './Users.module.css';
 import User from './User/User';
+import Paginator from "../Paginator/Paginator";
 
 const Users = (props) => {
-    const pageCount = Math.ceil(props.totalCount / props.pageSize);
-    const pages = [];
-
-    for (let i = 1; i <= pageCount; i++) {
-        pages.push(i);
-    }
-
-
     return (
         <div>
-            <div>
-                { pages.map((p) => {
-                    return <span key={ p } className={ props.currentPage === p ? styles.selectedPage : undefined }
-                                 onClick={ () => props.switchCurrentPage(p) }> { p }</span>;
-                }) }
-            </div>
-            { props.users.map((user) => <User addFollowedUser={props.addFollowedUser} followingInProgress={ props.followingInProgress }
+            <Paginator switchCurrentPage={ props.switchCurrentPage } pageSize={ props.pageSize }
+                       currentPage={ props.currentPage }
+                       totalCount={ props.totalCount }/>
+            { props.users.map((user) => <User followingInProgress={ props.followingInProgress }
                                               key={ user.id } user={ user } followUserThunk={ props.followUserThunk }
                                               unfollowUserThunk={ props.unfollowUserThunk }/>) }
         </div>

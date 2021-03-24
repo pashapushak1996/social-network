@@ -1,5 +1,6 @@
 //Action types
 import {usersService} from "../../services/users-service";
+import {updateObjectInArray} from "../../utils/helpers";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -34,22 +35,14 @@ const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW: {
             return {
-                ...state, users: state.users.map((user) => {
-                    if (user.id === action.userId) {
-                        return {...user, followed: true};
-                    }
-                    return user;
-                })
+                ...state, users:
+                    updateObjectInArray(state.users, "id", action.userId, {followed: true})
             };
         }
         case UNFOLLOW : {
             return {
-                ...state, users: state.users.map((user) => {
-                    if (user.id === action.userId) {
-                        return {...user, followed: false,};
-                    }
-                    return user;
-                })
+                ...state, users:
+                    updateObjectInArray(state.users, "id", action.userId, {followed: false})
             };
         }
         case SET_USERS: {
@@ -87,36 +80,34 @@ const usersReducer = (state = initialState, action) => {
 
 //THUNK CREATORS
 
-export const getUsersThunkCreator = (currentPage, pageSize) => (dispatch) => {
+
+export const getUsersThunkCreator = (currentPage, pageSize) => async (dispatch) => {
     dispatch(setIsFetching(true));
-    usersService.getUsers(currentPage, pageSize)
-        .then(data => {
-            dispatch(setUsersTotalCount(data.totalCount));
-            dispatch(setUsers(data.items));
-            dispatch(setIsFetching(false));
-        });
+    const data = await usersService.getUsers(currentPage, pageSize);
+    dispatch(setUsersTotalCount(data.totalCount));
+    dispatch(setUsers(data.items));
+    dispatch(setIsFetching(false));
 };
 
-export const followUserThunkCreator = (id) => (dispatch) => {
-    dispatch(toggleFollowingInProgress(true, id));
-    usersService.followUser(id)
-        .then(data => {
-            if (data.resultCode === 0) {
-                dispatch(followSuccess(id));
-            }
-            dispatch(toggleFollowingInProgress(false, id));
-        });
+//Функція логіки follow і unfollow thunk creator, заміна двох функцій щоб використати одну цю, рефакторинг
+
+const followUnfollowFlow = async (dispatch, userId, toggleFollowingInProgress, actionCreator, apiMethod) => {
+    dispatch(toggleFollowingInProgress(true, userId));
+    const data = await apiMethod(userId);
+    if (data.resultCode === 0) {
+        dispatch(actionCreator(userId));
+    }
+    dispatch(toggleFollowingInProgress(false, userId));
+}
+
+export const followUserThunkCreator = (userId) => async (dispatch) => {
+    const apiMethod = usersService.followUser.bind(usersService);
+    followUnfollowFlow(dispatch, userId, toggleFollowingInProgress, followSuccess, apiMethod);
 };
 
-export const unfollowUserThunkCreator = (id) => (dispatch) => {
-    dispatch(toggleFollowingInProgress(true, id));
-    usersService.unfollowUser(id)
-        .then(data => {
-            if (data.resultCode === 0) {
-                dispatch(unfollowSuccess(id));
-            }
-            dispatch(toggleFollowingInProgress(false, id));
-        });
+export const unfollowUserThunkCreator = (userId) => async (dispatch) => {
+    const apiMethod = usersService.unfollowUser.bind(usersService);
+    followUnfollowFlow(dispatch, userId, toggleFollowingInProgress, unfollowSuccess, apiMethod);
 };
 
 export default usersReducer;

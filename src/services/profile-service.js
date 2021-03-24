@@ -7,10 +7,11 @@ export const profileService = {
     },
     async getUserStatus(id) {
         const {data} = await instance.get(`/profile/status/${ id }`);
-        return {data}
+        return data
     },
     async updateStatus(status) {
         const {data} = await instance.put(`/profile/status`, {status});
-        return {data};
+        return data;
+
     }
 }

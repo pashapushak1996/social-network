@@ -13,7 +13,6 @@ import {getAuthUserId, getIsAuth} from "../../redux/selectors/auth-selectors";
 
 
 const ProfileContainer = (props) => {
-
     useEffect(() => {
         let {match: {params: {id}}} = props;
         if (!id) {

@@ -19,7 +19,6 @@ const MyPosts = (props) => {
         props.addPost(postText);
     };
 
-
     return (
         <div className={ styles.postsBlock }>
             <h2>My posts</h2>
@@ -31,6 +30,6 @@ const MyPosts = (props) => {
             </div>
         </div>
     );
-}
+};
 
 export default MyPosts;

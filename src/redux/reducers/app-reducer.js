@@ -10,7 +10,7 @@ const initializedSuccess = (isInit) => ({type: INITIALIZED_SUCCESS, isInit});
 
 const initialState = {
     initialized: false
-}
+};
 
 const appReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -31,6 +31,6 @@ export const initializeApp = () => (dispatch) => {
     Promise.all([promise]).then(() =>
         dispatch(initializedSuccess())
     );
-}
+};
 
 export default appReducer;

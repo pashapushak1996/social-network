@@ -1,0 +1,12 @@
+.items {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    border: 2px solid grey;
+    padding: 10px;
+}
+.selectedPage {
+    font-weight: bold;
+}

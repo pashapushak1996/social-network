@@ -29,7 +29,7 @@ const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST : {
             if (action.postText.length === 0) {
-                return state
+                return state;
             }
             const newPost = {
                 id: Math.ceil(Math.random() * 1000),
@@ -42,10 +42,10 @@ const profileReducer = (state = initialState, action) => {
             return {...state, posts: state.posts.filter((post) => post.id !== action.postId)};
         }
         case SET_USER_PROFILE: {
-            return {...state, profile: action.profile}
+            return {...state, profile: action.profile};
         }
         case SET_USER_STATUS: {
-            return {...state, status: action.status}
+            return {...state, status: action.status};
         }
         default : {
             return state;
@@ -54,27 +54,21 @@ const profileReducer = (state = initialState, action) => {
 };
 
 
-export const getProfileThunkCreator = (id) => (dispatch) => {
-    profileService.getUserProfile(id)
-        .then(data => {
-            dispatch(setUserProfile(data));
-        });
+export const getProfileThunkCreator = (id) => async (dispatch) => {
+    const data = await profileService.getUserProfile(id);
+    dispatch(setUserProfile(data));
 };
 
-export const getProfileStatusThunkCreator = (id) => (dispatch) => {
-    profileService.getUserStatus(id)
-        .then(data => {
-            dispatch(setUserStatus(data.data));
-        });
+export const getProfileStatusThunkCreator = (id) => async (dispatch) => {
+    const data = await profileService.getUserStatus(id);
+    dispatch(setUserStatus(data));
 };
 
-export const updateProfileStatus = (status) => (dispatch) => {
-    profileService.updateStatus(status).then(data => {
-            if (data.data.resultCode === 0) {
-                dispatch(setUserStatus(status));
-            }
-        }
-    );
+export const updateProfileStatus = (status) => async (dispatch) => {
+    const {resultCode} = await profileService.updateStatus(status);
+    if (resultCode === 0) {
+        dispatch(setUserStatus(status));
+    }
 };
 
 export default profileReducer;
