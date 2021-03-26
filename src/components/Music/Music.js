@@ -16,11 +16,10 @@ const Music = ({tracks, currPage, totalCount, switchCurrentPage, sizeOfPage}) =>
         </div>)
     });
 
-
     return (
         <div>
             <Paginator totalItemCount={ totalCount } pageSize={ sizeOfPage } currentPage={ currPage }
-                       switchCurrentPage={ switchCurrentPage } portionSize={10}/>
+                       switchCurrentPage={ switchCurrentPage } portionSize={ 10 }/>
             <div className={ styles.items }>
                 { tracksElements }
             </div>

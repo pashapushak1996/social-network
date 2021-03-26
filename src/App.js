@@ -4,42 +4,49 @@ import {Route, withRouter} from 'react-router-dom';
 import News from './components/News/News';
 import {connect} from 'react-redux';
 import NavbarContainer from './components/Navbar/NavbarContainer';
-import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from "./components/Profile/ProfileContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import ProfileContainer from './components/Profile/ProfileContainer';
+import HeaderContainer from './components/Header/HeaderContainer';
 import Login from "./components/Login/Login";
-import {Component} from "react";
-import {initializeApp} from "./redux/reducers/app-reducer";
-import Preloader from "./components/common/Preloader/Preloader";
+import React, {useEffect} from "react";
+import {initializeApp} from './redux/reducers/app-reducer';
+import Preloader from './components/common/Preloader/Preloader';
 import {compose} from "redux";
-import MusicContainer from "./components/Music/MusicContainer";
+import UsersContainer from './components/Users/UsersContainer';
+import withSuspense from "./hoc/withSuspense";
 
-class App extends Component {
-    componentDidMount() {
-        this.props.initializeApp();
+const MusicContainer = React.lazy(() => import(`./components/Music/MusicContainer`));
+const MusicContainerWithSuspense = withSuspense(MusicContainer);
+
+
+const App = (props) => {
+
+    useEffect(() => {
+        props.initializeApp();
+    }, [props.initialized])
+
+
+    if (!props.initialized) {
+        return <Preloader/>
     }
 
-    render() {
-        if (!this.props.initialized) {
-            return <Preloader/>
-        }
-        return (<div className="app-wrapper">
-                <HeaderContainer/>
-                <NavbarContainer/>
-                <div className={ 'app-wrapper-content' }>
-                    <Route path={ `/profile/:id?` }
-                           render={ () => <ProfileContainer/> }/>
-                    <Route exact={ true } path={ `/dialogs/:id?` }
-                           render={ () => <DialogsContainer/> }/>
-                    <Route path={ `/news` } component={ News }/>
-                    <Route path={ `/music` } render={ () => <MusicContainer/> }/>
-                    <Route path={ `/users` } render={ () => <UsersContainer/> }/>
-                    <Route path={ `/login` } render={ () => <Login/> }/>
-                </div>
+    return (<div className="app-wrapper">
+            <HeaderContainer/>
+            <NavbarContainer/>
+            <div className={ 'app-wrapper-content' }>
+                <Route path={ `/profile/:id?` }
+                       render={ () => <ProfileContainer/> }/>
+                <Route exact={ true } path={ `/dialogs/:id?` }
+                       render={ () => <DialogsContainer/> }/>
+                <Route path={ `/news` } component={ News }/>
+                <Route path={ `/music` } render={ () => (
+                    <MusicContainerWithSuspense/>
+                ) }/>
+                <Route path={ `/users` } render={ () => <UsersContainer/> }/>
+                <Route path={ `/login` } render={ withSuspense(Login) }/>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 const mapStateToProps = (state) => {
     return {
