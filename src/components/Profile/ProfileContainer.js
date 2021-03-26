@@ -3,7 +3,7 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
     getProfileStatusThunkCreator,
-    getProfileThunkCreator,
+    getProfileThunkCreator, savePhoto, updateProfileData,
     updateProfileStatus
 } from "../../redux/reducers/profile-reducer";
 import {withRouter} from "react-router-dom";
@@ -23,12 +23,14 @@ const ProfileContainer = (props) => {
         }
         props.getProfileThunkCreator(id);
         props.getProfileStatusThunkCreator(id);
-    }, [props.authorizedUserId]);
+    }, [props.authorizedUserId, props.match.params.id]);
 
-    return <Profile { ...props }
+    return <Profile savePhoto={ props.savePhoto }
+                    isOwner={ !props.match.params.id }
                     status={ props.status }
                     profile={ props.profile }
-                    updateProfileStatus={ props.updateProfileStatus }/>
+                    updateProfileStatus={ props.updateProfileStatus }
+                    updateProfileData={ props.updateProfileData }/>
 
 }
 
@@ -42,6 +44,12 @@ const mapStateToProps = (state) => {
 };
 
 export default compose(
-    connect(mapStateToProps, {getProfileThunkCreator, getProfileStatusThunkCreator, updateProfileStatus}),
+    connect(mapStateToProps, {
+        getProfileThunkCreator,
+        getProfileStatusThunkCreator,
+        updateProfileStatus,
+        savePhoto,
+        updateProfileData
+    }),
     withRouter,
 )(ProfileContainer);

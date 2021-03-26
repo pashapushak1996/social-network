@@ -3,7 +3,6 @@ import {Field, reduxForm, reset} from "redux-form";
 import {formElement} from "../../common/FormsControls/FormsControls";
 import {maxLength, required} from "../../../utils/validators";
 
-const textarea = formElement("textarea");
 const maxLength300 = maxLength(300);
 
 const AddMessageForm = (props) => {

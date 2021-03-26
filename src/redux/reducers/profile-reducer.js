@@ -1,16 +1,19 @@
 //Action types
 import {profileService} from "../../services/profile-service";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = 'ADD_POST';
 const DELETE_POST = 'DELETE_POST';
 const SET_USER_PROFILE = `SET_USER_PROFILE`;
 const SET_USER_STATUS = 'SET_USER_STATUS';
+const SAVE_PHOTO = 'SAVE_PHOTO';
 
 //Action creators
 export const addPostCreator = (postText) => ({type: ADD_POST, postText});
 export const deletePostCreator = (postId) => ({type: DELETE_POST, postId});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
+export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO, photos});
 
 const initialState = {
     posts: [
@@ -47,6 +50,9 @@ const profileReducer = (state = initialState, action) => {
         case SET_USER_STATUS: {
             return {...state, status: action.status};
         }
+        case SAVE_PHOTO: {
+            return {...state, profile: {...state.profile, photos: action.photos}}
+        }
         default : {
             return state;
         }
@@ -68,6 +74,23 @@ export const updateProfileStatus = (status) => async (dispatch) => {
     const {resultCode} = await profileService.updateStatus(status);
     if (resultCode === 0) {
         dispatch(setUserStatus(status));
+    }
+};
+
+export const savePhoto = (photoFile) => async (dispatch) => {
+    const {data, resultCode} = await profileService.updatePhoto(photoFile);
+    if (resultCode === 0) {
+        dispatch(savePhotoSuccess(data.photos));
+    }
+};
+
+export const updateProfileData = (profileData) => async (dispatch, getState) => {
+    const data = await profileService.updateProfile(profileData);
+    const userId = getState().auth.userId;
+    if (data.resultCode === 0) {
+        dispatch(getProfileThunkCreator(userId));
+    } else {
+        dispatch(stopSubmit())
     }
 };
 
