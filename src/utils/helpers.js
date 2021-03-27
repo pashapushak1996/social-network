@@ -9,4 +9,10 @@ export const updateObjectInArray = (items, objProp, itemId, objPropToReplace) =>
     });
 };
 
+//Функція обробки строки помилки з серверу
+export const errorMessageToForm = (string) => {
+    const strings = string.split('->')
+    return strings[1].slice(0, -1).toLowerCase();
+};
+
 

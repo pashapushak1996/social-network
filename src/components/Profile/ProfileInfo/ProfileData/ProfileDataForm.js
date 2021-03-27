@@ -1,5 +1,4 @@
 import React from "react";
-import Contact from "../Contacts";
 import {Field, reduxForm} from "redux-form";
 import {formElement} from "../../../common/FormsControls/FormsControls";
 import {required} from "../../../../utils/validators";
@@ -38,7 +37,7 @@ const ProfileDataForm = (props) => {
                 <b>Contacts: </b>
                 { Object.keys(props.profile.contacts).map((key) => <div key={ key }>
                     <b>{ key } :</b>
-                    <Field name={ 'contacts.' + key } component={ 'input' } placeholder={ key }/>
+                    <Field name={ 'contacts.' + key } component={ formElement('input') } placeholder={ key }/>
                 </div>) }
             </div>
             <button>Save</button>

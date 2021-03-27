@@ -14,8 +14,9 @@ const ProfileInfo = ({profile, isOwner, status, updateProfileStatus, savePhoto, 
         return <Preloader/>
     }
     const onProfileDataSave = (data) => {
-        updateProfileData(data);
-        setEditMode(false);
+        updateProfileData(data).then(() => {
+            setEditMode(false);
+        });
     }
 
     return (

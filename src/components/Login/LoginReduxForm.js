@@ -23,14 +23,14 @@ const LoginForm = (props) => {
                 <Field type="checkbox" component={ `input` } name={ `rememberMe` }/>
                 <span>remember me</span>
             </div>
-            { props.captchaURL > 0 && <div>
+            { props.captchaURL.length > 0 && <div>
                 <Field type={ 'text' } component={ `input` } name={ `captcha` }/>
             </div> }
             <div className={ styles.btn }>
                 <button>Sign in</button>
             </div>
-            <div className={classes.formSummaryError}>
-                    {props.error && props.error }
+            <div className={ classes.formSummaryError }>
+                { props.error && props.error }
             </div>
         </form>
     );

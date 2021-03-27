@@ -22,7 +22,7 @@ const App = (props) => {
 
     useEffect(() => {
         props.initializeApp();
-    }, [props.initialized])
+    }, [props, props.initialized])
 
 
     if (!props.initialized) {

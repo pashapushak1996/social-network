@@ -1,6 +1,7 @@
 //Action types
 import {profileService} from "../../services/profile-service";
 import {stopSubmit} from "redux-form";
+import {errorMessageToForm} from "../../utils/helpers";
 
 const ADD_POST = 'ADD_POST';
 const DELETE_POST = 'DELETE_POST';
@@ -90,7 +91,9 @@ export const updateProfileData = (profileData) => async (dispatch, getState) => 
     if (data.resultCode === 0) {
         dispatch(getProfileThunkCreator(userId));
     } else {
-        dispatch(stopSubmit())
+        const errorField = errorMessageToForm(data.messages[0]);
+        dispatch(stopSubmit('profile', {"contacts": {[errorField]: data.messages[0]}}));
+        return Promise.reject(data.messages[0]);
     }
 };
 
