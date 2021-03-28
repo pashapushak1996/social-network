@@ -15,8 +15,7 @@ const Login = (props) => {
         props.isAuth ? <Redirect to={ `/profile` }/>
             : <div className={ styles.formContainer }>
                 <h1>Login</h1>
-                <LoginReduxForm onSubmit={ login }/>
-                { props.captchaURL && <img src={ props.captchaURL } alt=""/> }
+                <LoginReduxForm onSubmit={ login } captchaURL={ props.captchaURL }/>
             </div>)
 
 };

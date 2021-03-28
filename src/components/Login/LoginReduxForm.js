@@ -20,12 +20,15 @@ const LoginForm = (props) => {
                        validate={ [required] }/>
             </div>
             <div className={ styles.item }>
-                <Field type="checkbox" component={ `input` } name={ `rememberMe` }/>
+                <Field type="checkbox" component={ input } name={ `rememberMe` }/>
                 <span>remember me</span>
             </div>
-            { props.captchaURL.length > 0 && <div>
-                <Field type={ 'text' } component={ `input` } name={ `captcha` }/>
-            </div> }
+            { props.captchaURL &&
+            <Field type={ 'text' } placeholder={ `Type symbols on image` } component={ input } name={ `captcha` }/> }
+
+            { props.captchaURL &&
+            <img style={ {paddingTop: 10} } src={ props.captchaURL } alt=""/> }
+
             <div className={ styles.btn }>
                 <button>Sign in</button>
             </div>
@@ -40,11 +43,5 @@ const LoginReduxForm = reduxForm({
     form: 'login'
 })(LoginForm);
 
-const mapStateToProps = (state) => ({
-    captchaURL: state.auth.captchaURL
-});
 
-const connectedLoginReduxForm = connect(mapStateToProps, {})(LoginReduxForm);
-
-
-export default connectedLoginReduxForm;
+export default LoginReduxForm;
